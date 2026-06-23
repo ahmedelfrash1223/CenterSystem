@@ -30,8 +30,6 @@ class AdminsTable
                 TextColumn::make('email')
                     ->searchable(),
 
-                TextColumn::make('created_at')
-                    ->dateTime(),
             ])
             ->filters([
                 TrashedFilter::make(),
@@ -39,6 +37,7 @@ class AdminsTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                RestoreAction::make()
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -40,8 +40,6 @@ class StudentsTable
                 IconColumn::make('is_active')
                     ->boolean(),
 
-                TextColumn::make('created_at')
-                    ->dateTime(),
             ])
             ->filters([
                 TrashedFilter::make(),
@@ -50,6 +48,8 @@ class StudentsTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                RestoreAction::make()
+
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
