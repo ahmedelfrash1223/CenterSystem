@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Admins\Schemas;
 
+use App\Enums\IsActiveEnum;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
@@ -33,11 +34,10 @@ class AdminInfolist
                         ->icon('heroicon-o-envelope'),
 
                     TextEntry::make('is_active')
-                        ->label('Status')
                         ->badge()
-                        ->formatStateUsing(fn($state) => $state ? 'Active' : 'Inactive')
-                        ->color(fn($state) => $state ? 'success' : 'danger')
-                        ->icon('heroicon-o-check-circle'),
+                        ->formatStateUsing(fn($state) => IsActiveEnum::getLabelFromState($state))
+                        ->color(fn($state) => IsActiveEnum::getColorFromState($state))
+                        ->icon(fn($state) => IsActiveEnum::getIconFromState($state)),
 
                     TextEntry::make('created_at')
                         ->label('Created At')

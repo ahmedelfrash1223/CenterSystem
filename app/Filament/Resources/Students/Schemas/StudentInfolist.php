@@ -45,27 +45,10 @@ class StudentInfolist
                         ->icon('heroicon-o-phone-arrow-up-right'),
 
                     TextEntry::make('gender')
-                        ->label('Gender')
-                        ->formatStateUsing(function ($state) {
-                            if ($state instanceof UserGenderEnum) {
-                                return $state->label();
-                            }
-
-                            return UserGenderEnum::from((int) $state)?->label();
-                        })
                         ->badge()
-                        ->color(function ($state) {
-                            $enum = $state instanceof UserGenderEnum
-                                ? $state
-                                : UserGenderEnum::from((int) $state);
-
-                            return match ($enum) {
-                                UserGenderEnum::MALE => 'info',
-                                UserGenderEnum::FEMALE => 'pink',
-                                default => 'gray',
-                            };
-                        })
-                        ->icon('heroicon-o-user-circle'),
+                        ->formatStateUsing(fn($state) => UserGenderEnum::getLabelFromState($state))
+                        ->color(fn($state) => UserGenderEnum::getColorFromState($state))
+                        ->icon(fn($state) => UserGenderEnum::getIconFromState($state)),
 
                     TextEntry::make('country')
                         ->icon('heroicon-o-globe-alt'),
@@ -80,27 +63,10 @@ class StudentInfolist
 
 
                     TextEntry::make('is_active')
-                        ->label('Status')
-                        ->formatStateUsing(function ($state) {
-                            if ($state instanceof IsActiveEnum) {
-                                return $state->label();
-                            }
-
-                            return IsActiveEnum::from((int) $state)?->label();
-                        })
                         ->badge()
-                        ->color(function ($state) {
-                            $enum = $state instanceof IsActiveEnum
-                                ? $state
-                                : IsActiveEnum::from((int) $state);
-
-                            return match ($enum) {
-                                IsActiveEnum::ACTIVE => 'success',
-                                IsActiveEnum::INACTIVE => 'danger',
-                                default => 'gray',
-                            };
-                        })
-                        ->icon('heroicon-o-check-circle'),
+                        ->formatStateUsing(fn($state) => IsActiveEnum::getLabelFromState($state))
+                        ->color(fn($state) => IsActiveEnum::getColorFromState($state))
+                        ->icon(fn($state) => IsActiveEnum::getIconFromState($state)),
 
 
                 ]),
@@ -111,62 +77,17 @@ class StudentInfolist
                 ->columns(2)
                 ->schema([
 
-
-
                     TextEntry::make('academic_level')
-                        ->label('Academic Level')
-                        ->formatStateUsing(function ($state) {
-                            if ($state instanceof AcademicLevelEnum) {
-                                return $state->label();
-                            }
-
-                            return AcademicLevelEnum::from((int) $state)?->label();
-                        })
                         ->badge()
-                        ->color(function ($state) {
-                            $enum = $state instanceof AcademicLevelEnum
-                                ? $state
-                                : AcademicLevelEnum::from((int) $state);
-
-                            return match ($enum) {
-                                AcademicLevelEnum::PRIMARY => 'info',
-                                AcademicLevelEnum::PREPARATORY => 'warning',
-                                AcademicLevelEnum::SECONDARY => 'danger',
-                                AcademicLevelEnum::UNIVERSITY => 'success',
-                                default => 'gray',
-                            };
-                        })
-                        ->icon('heroicon-o-academic-cap'),
-
-
+                        ->formatStateUsing(fn($state) => AcademicLevelEnum::getLabelFromState($state))
+                        ->color(fn($state) => AcademicLevelEnum::getColorFromState($state))
+                        ->icon(fn($state) => AcademicLevelEnum::getIconFromState($state)),
 
                     TextEntry::make('academic_year')
-                        ->label('Academic Year')
-                        ->formatStateUsing(function ($state) {
-                            if ($state instanceof AcademicYearEnum) {
-                                return $state->label();
-                            }
-
-                            return AcademicYearEnum::from((int) $state)?->label();
-                        })
                         ->badge()
-                        ->color(function ($state) {
-                            $enum = $state instanceof AcademicYearEnum
-                                ? $state
-                                : AcademicYearEnum::from((int) $state);
-
-                            return match ($enum) {
-                                AcademicYearEnum::FIRST => 'info',
-                                AcademicYearEnum::SECOND => 'warning',
-                                AcademicYearEnum::THIRD => 'danger',
-                                AcademicYearEnum::FOURTH => 'success',
-                                AcademicYearEnum::FIFTH => 'primary',
-                                AcademicYearEnum::SIXTH => 'secondary',
-
-                                default => 'gray',
-                            };
-                        })
-                        ->icon('heroicon-o-academic-cap'),
+                        ->formatStateUsing(fn($state) => AcademicYearEnum::getLabelFromState($state))
+                        ->color(fn($state) => AcademicYearEnum::getColorFromState($state))
+                        ->icon(fn($state) => AcademicYearEnum::getIconFromState($state)),
 
                     TextEntry::make('edu_ins')
                         ->label('Institution')

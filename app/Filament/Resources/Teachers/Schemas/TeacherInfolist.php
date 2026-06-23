@@ -38,28 +38,11 @@ class TeacherInfolist
                         ->label('Phone')
                         ->icon('heroicon-o-phone'),
 
-                     TextEntry::make('gender')
-                        ->label('Gender')
-                        ->formatStateUsing(function ($state) {
-                            if ($state instanceof UserGenderEnum) {
-                                return $state->label();
-                            }
-
-                            return UserGenderEnum::from((int) $state)?->label();
-                        })
+                    TextEntry::make('gender')
                         ->badge()
-                        ->color(function ($state) {
-                            $enum = $state instanceof UserGenderEnum
-                                ? $state
-                                : UserGenderEnum::from((int) $state);
-
-                            return match ($enum) {
-                                UserGenderEnum::MALE => 'info',
-                                UserGenderEnum::FEMALE => 'pink',
-                                default => 'gray',
-                            };
-                        })
-                        ->icon('heroicon-o-user-circle'),
+                        ->formatStateUsing(fn($state) => UserGenderEnum::getLabelFromState($state))
+                        ->color(fn($state) => UserGenderEnum::getColorFromState($state))
+                        ->icon(fn($state) => UserGenderEnum::getIconFromState($state)),
 
                     TextEntry::make('country')
                         ->icon('heroicon-o-globe-alt'),
@@ -84,28 +67,11 @@ class TeacherInfolist
                         })
                         ->badge(),
 
-                   TextEntry::make('is_active')
-                        ->label('Status')
-                        ->formatStateUsing(function ($state) {
-                            if ($state instanceof IsActiveEnum) {
-                                return $state->label();
-                            }
-
-                            return IsActiveEnum::from((int) $state)?->label();
-                        })
+                    TextEntry::make('is_active')
                         ->badge()
-                        ->color(function ($state) {
-                            $enum = $state instanceof IsActiveEnum
-                                ? $state
-                                : IsActiveEnum::from((int) $state);
-
-                            return match ($enum) {
-                                IsActiveEnum::ACTIVE => 'success',
-                                IsActiveEnum::INACTIVE => 'danger',
-                                default => 'gray',
-                            };
-                        })
-                        ->icon('heroicon-o-check-circle'),
+                        ->formatStateUsing(fn($state) => IsActiveEnum::getLabelFromState($state))
+                        ->color(fn($state) => IsActiveEnum::getColorFromState($state))
+                        ->icon(fn($state) => IsActiveEnum::getIconFromState($state)),
                 ]),
 
             ComponentsSection::make('Barcode')
