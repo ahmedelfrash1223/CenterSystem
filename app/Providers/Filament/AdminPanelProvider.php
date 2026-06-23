@@ -19,25 +19,30 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        $setting = Setting::first();
+        $setting = null;
+
+        if (Schema::hasTable('settings')) {
+            $setting = Setting::firstOrNew([]);
+        }
         return $panel
             ->default()
-            ->brandName($setting->site_name)
-            ->favicon($setting->getSiteImageUrl())
+            ->brandName($setting?->site_name ?? config('app.name'))
+            ->favicon($setting?->getSiteImageUrl())
+            ->colors([
+                'primary' => $setting?->hero_gradient[1] ?? '#3b82f6',
+            ])
             ->spa()
             ->id('admin')
             ->path('dashboard')
             ->defaultThemeMode(ThemeMode::Dark)
             ->login()
-            ->colors([
-                'primary' => $setting->hero_gradient[1],
-            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
