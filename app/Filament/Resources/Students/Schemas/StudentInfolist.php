@@ -10,6 +10,7 @@ use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section as ComponentsSection;
 use Filament\Schemas\Schema;
+use Filament\Infolists\Components\ViewEntry;
 
 class StudentInfolist
 {
@@ -161,7 +162,7 @@ class StudentInfolist
                                 AcademicYearEnum::FOURTH => 'success',
                                 AcademicYearEnum::FIFTH => 'primary',
                                 AcademicYearEnum::SIXTH => 'secondary',
-                                
+
                                 default => 'gray',
                             };
                         })
@@ -175,6 +176,23 @@ class StudentInfolist
                         ->label('Branch')
                         ->icon('heroicon-o-building-office-2'),
                 ]),
+
+
+            ComponentsSection::make('Barcode')
+                ->icon('heroicon-o-qr-code')
+                ->columns(1)
+                ->schema([
+
+                    ComponentsSection::make('Barcode')
+                        ->description('Scan this code to get user code')
+                        ->icon('heroicon-o-qr-code')
+                        ->schema([
+
+                            ViewEntry::make('barcode')
+                                ->view('filament.infolists.barcode'),
+                        ]),
+                ]),
+
 
             ComponentsSection::make('System Info')
                 ->icon('heroicon-o-cog-6-tooth')
@@ -191,6 +209,10 @@ class StudentInfolist
                         ->dateTime()
                         ->icon('heroicon-o-clock'),
                 ]),
+
+
+
+
         ]);
     }
 }

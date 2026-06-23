@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Admins\Schemas;
 
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ViewEntry;
 use Filament\Schemas\Components\Section as ComponentsSection;
 use Filament\Schemas\Schema;
 
@@ -34,8 +35,8 @@ class AdminInfolist
                     TextEntry::make('is_active')
                         ->label('Status')
                         ->badge()
-                        ->formatStateUsing(fn ($state) => $state ? 'Active' : 'Inactive')
-                        ->color(fn ($state) => $state ? 'success' : 'danger')
+                        ->formatStateUsing(fn($state) => $state ? 'Active' : 'Inactive')
+                        ->color(fn($state) => $state ? 'success' : 'danger')
                         ->icon('heroicon-o-check-circle'),
 
                     TextEntry::make('created_at')
@@ -47,6 +48,22 @@ class AdminInfolist
                         ->label('Last Updated')
                         ->dateTime()
                         ->icon('heroicon-o-clock'),
+                ]),
+
+
+            ComponentsSection::make('Barcode')
+                ->icon('heroicon-o-qr-code')
+                ->columns(1)
+                ->schema([
+
+                    ComponentsSection::make('Barcode')
+                        ->description('Scan this code to get user code')
+                        ->icon('heroicon-o-qr-code')
+                        ->schema([
+
+                            ViewEntry::make('barcode')
+                                ->view('filament.infolists.barcode'),
+                        ]),
                 ]),
         ]);
     }
