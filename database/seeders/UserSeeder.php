@@ -13,6 +13,7 @@ class UserSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'admin@example.com'],
             [
+                'code' => 'admin',
                 'name' => 'Admin',
                 'password' => Hash::make('P@ssw0rd'),
                 'email_verified_at' => now(),
